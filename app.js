@@ -104,7 +104,8 @@ function checkLogin() {
         // Ví dụ: so sánh với thông tin đăng nhập đã lưu trữ
 
         // Lưu cookie tên đăng nhập (không bao gồm mật khẩu)
-        document.cookie = `username=${username}; path=/; max-age=3600`; // Cookie sẽ hết hạn sau 1 giờ
+        document.cookie = `username=${username}; path=/`; // Cookie sẽ hết hạn sau 1 giờ
+        document.getElementById("sender-input").value = username;
         alert("Đăng nhập thành công!");
     } else {
         alert(`Chào mừng trở lại, ${usernameCookie}!`);
