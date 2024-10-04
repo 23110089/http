@@ -43,12 +43,13 @@ const loadMessages = (senderName, receiverName) => {
             const li = document.createElement("li");
 
             // Kiểm tra nếu tin nhắn là của người gửi hiện tại
-            if (sender === senderName && receiver === receiverName) {
+            if (sender === senderName) {
                 li.classList.add("sender");
-                li.textContent = `${text}`; // Chỉ hiển thị nội dung tin nhắn
-            } else if (receiver === senderName && sender === receiverName) { // Kiểm tra nếu người nhận là người hiện tại
+                li.textContent = `${receiverName} : ${text}`;
+            } else if (receiver === senderName) {
+                // Kiểm tra nếu người nhận là người hiện tại
                 li.classList.add("receiver");
-                li.textContent = `${text}`; // Chỉ hiển thị nội dung tin nhắn
+                li.textContent = `${receiverName} : ${text}`;
             }
 
             messagesList.appendChild(li);
@@ -59,30 +60,24 @@ const loadMessages = (senderName, receiverName) => {
 
 // Gửi tin nhắn
 const sendMessage = async () => {
-    const senderInput = document.getElementById("sender-input");
-    const receiverInput = document.getElementById("receiver-input");
-    const messageInput = document.getElementById("message-input");
-    
-    const senderName = senderInput.value.trim();
-    const receiverName = receiverInput.value.trim();
-    const messageText = messageInput.value.trim();
+    const senderName = document.getElementById("sender-input").value.trim();
+    const receiverName = document.getElementById("receiver-input").value.trim();
+    const messageText = document.getElementById("message-input").value.trim();
 
     if (senderName && receiverName && messageText) {
         await addDoc(messagesRef, {
             sender: senderName,
             receiver: receiverName,
             text: messageText,
-            timestamp: new Date() // Thêm timestamp
+            timestamp: new Date()
         });
-        messageInput.value = ""; // Xóa trường nhập
+        document.getElementById("message-input").value = ""; // Xóa trường nhập
     }
     messagesList.scrollTop = messagesList.scrollHeight;
 };
 
-// Gửi khi nhấn nút
+// Gửi tin nhắn
 document.getElementById("send-button").addEventListener("click", sendMessage);
-
-// Gửi khi nhấn phím Enter
 document.getElementById("message-input").addEventListener("keypress", (event) => {
     if (event.key === "Enter"&& !event.shiftKey) {
         event.preventDefault(); // Ngăn chặn hành động mặc định
@@ -93,19 +88,13 @@ document.getElementById("message-input").addEventListener("keypress", (event) =>
 // Lắng nghe sự thay đổi trong trường nhập người gửi và người nhận
 const senderInput = document.getElementById("sender-input");
 const receiverInput = document.getElementById("receiver-input");
-
 senderInput.addEventListener("input", () => {
     const senderName = senderInput.value.trim();
     const receiverName = receiverInput.value.trim();
-    if (senderName && receiverName) {
-        loadMessages(senderName);
-    }
+    if (senderName && receiverName) loadMessages(senderName);
 });
-
 receiverInput.addEventListener("input", () => {
     const senderName = senderInput.value.trim();
     const receiverName = receiverInput.value.trim();
-    if (senderName && receiverName) {
-        loadMessages(senderName);
-    }
+    if (senderName && receiverName) loadMessages(senderName);
 });
