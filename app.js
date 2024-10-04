@@ -107,7 +107,7 @@ function checkLogin() {
         document.cookie = `username=${username}; path=/`;
         alert("Đăng nhập thành công!");
     } else {
-        alert(`Chào mừng trở lại, ${usernameCookie}!`);
+        document.cookie;
     }
 }
 
