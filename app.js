@@ -108,12 +108,10 @@ const checkLogin = async () => {
             
             accountsArray.forEach(({ tk, mk }) => {
                 if(username == tk){
-                    ktra = true;
-                    if(password != mk){
+                    if(password !== mk && ktra === false){
                         password = prompt("Xin vui lòng nhập mật khẩu: ");
-                    }else{
-                        break;
                     }
+                    ktra = true;
                 }
             }
             if(ktra === false) break;
