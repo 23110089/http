@@ -120,4 +120,6 @@ function getCookie(name) {
 
 // Gọi hàm kiểm tra đăng nhập khi trang được tải
 window.onload = checkLogin;
-document.getElementById("sender-input").value = document.cookie; //getCookie("username");
+while(!document.cookie){
+    document.getElementById("sender-input").value = getCookie("username");
+}
