@@ -9,32 +9,14 @@
 </head>
 <body>
     <h1>Web Nhắn tin</h1>
-
-    <!-- Phần đăng nhập -->
-    <div id="login-form">
-        <h2>Đăng nhập</h2>
-        <input type="text" id="login-email" placeholder="Email" required>
-        <input type="password" id="login-password" placeholder="Mật khẩu" required>
-        <button id="login-button">Đăng nhập</button>
-        <p>Chưa có tài khoản? <a href="#" id="show-register">Đăng ký</a></p>
-    </div>
-
-    <!-- Phần đăng ký -->
-    <div id="register-form" style="display: none;">
-        <h2>Đăng ký</h2>
-        <input type="text" id="register-email" placeholder="Email" required>
-        <input type="password" id="register-password" placeholder="Mật khẩu" required>
-        <button id="register-button">Đăng ký</button>
-        <p>Đã có tài khoản? <a href="#" id="show-login">Đăng nhập</a></p>
-    </div>
-
-    <!-- Phần chat -->
-    <div id="chat-box" style="display: none;">
+    
+    <div id="chat-box">
         <ul id="messages"></ul>
-        <input type="text" id="sender-input" placeholder="Tên người gửi" required>
-        <input type="text" id="receiver-input" placeholder="Tên người nhận" required>
-        <textarea id="message-input" rows="3" placeholder="Nhập tin nhắn..."></textarea>
-        <button id="send-button">Gửi</button>
     </div>
+    
+    <input type="text" id="sender-input" placeholder="Tên người gửi" required>
+    <input type="text" id="receiver-input" placeholder="Tên người nhận" required>
+    <textarea id="message-input" rows="3" placeholder="Nhập tin nhắn..."></textarea>
+    <button id="send-button">Gửi</button>
 </body>
 </html>
