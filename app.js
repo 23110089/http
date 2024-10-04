@@ -84,7 +84,7 @@ document.getElementById("send-button").addEventListener("click", sendMessage);
 
 // Gửi khi nhấn phím Enter
 document.getElementById("message-input").addEventListener("keypress", (event) => {
-    if (event.key === "Enter") {
+    if (event.key === "Enter"&& !event.shiftKey) {
         event.preventDefault(); // Ngăn chặn hành động mặc định
         sendMessage(); // Gọi hàm gửi tin nhắn
     }
