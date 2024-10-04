@@ -105,8 +105,8 @@ const checkLogin = async () => {
         const accountsArray = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
         for(const account of accountsArray) {
             if(username == account.tk){
-                if(password !== mk && ktra === false){
-                    while(password !== mk) password = prompt("Xin vui lòng nhập mật khẩu: ");
+                if(password !== account.mk && ktra === false){
+                    while(password !== account.mk) password = prompt("Xin vui lòng nhập mật khẩu: ");
                 }
                 ktra = true;
             }
