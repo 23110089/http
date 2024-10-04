@@ -16,6 +16,8 @@ body {
 #messages {
     list-style-type: none;
     padding: 0;
+    display: flex;
+    flex-direction: column;
 }
 
 #messages li {
@@ -37,10 +39,4 @@ body {
     background-color: #f8d7da; /* Màu nền cho tin nhắn của người nhận */
     align-self: flex-start; /* Căn trái cho tin nhắn người nhận */
     margin-right: auto; /* Đẩy tin nhắn sang bên trái */
-}
-
-/* Thiết lập để sử dụng flexbox cho danh sách tin nhắn */
-#messages {
-    display: flex;
-    flex-direction: column;
 }
