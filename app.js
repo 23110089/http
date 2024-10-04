@@ -24,17 +24,31 @@ const messagesRef = collection(db, "messages");
 onSnapshot(messagesRef, (snapshot) => {
     const messagesList = document.getElementById("messages");
     messagesList.innerHTML = ""; // Xóa danh sách tin nhắn hiện tại
+
+    // Lấy tên người gửi từ trường input
+    const senderName = document.getElementById("sender-input").value.trim();
+
+    // Lưu tin nhắn vào mảng và sắp xếp theo timestamp
+    const messagesArray = [];
     snapshot.forEach((doc) => {
-        const { sender, receiver, text } = doc.data();
+        const data = doc.data();
+        messagesArray.push({ id: doc.id, ...data }); // Lưu id cùng dữ liệu
+    });
+
+    // Sắp xếp tin nhắn theo timestamp (từ cũ đến mới)
+    messagesArray.sort((a, b) => a.timestamp - b.timestamp);
+
+    // Hiển thị tin nhắn
+    messagesArray.forEach(({ sender, receiver, text }) => {
         const li = document.createElement("li");
 
-        // Kiểm tra nếu người gửi là người hiện tại
-        if (sender === "YourName") { // Thay "YourName" bằng tên của người gửi hiện tại
+        // Kiểm tra nếu tin nhắn là của người gửi hiện tại
+        if (sender === senderName) {
             li.classList.add("sender");
-            li.textContent = `${sender} gửi: ${text}`;
-        } else {
+            li.textContent = `${sender}: ${text}`;
+        } else if (receiver === senderName) { // Kiểm tra nếu người nhận là người hiện tại
             li.classList.add("receiver");
-            li.textContent = `${receiver} nhận: ${text}`;
+            li.textContent = `${receiver}: ${text}`;
         }
 
         messagesList.appendChild(li);
@@ -55,7 +69,8 @@ document.getElementById("send-button").addEventListener("click", async () => {
         await addDoc(messagesRef, {
             sender: senderName,
             receiver: receiverName,
-            text: messageText
+            text: messageText,
+            timestamp: new Date() // Thêm timestamp
         });
         messageInput.value = ""; // Xóa trường nhập
     }
