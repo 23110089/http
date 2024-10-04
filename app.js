@@ -100,8 +100,9 @@ const checkLogin = async () => {
         // Nếu không có cookie tên đăng nhập, yêu cầu người dùng nhập
         const username = prompt("Xin vui lòng nhập tên đăng nhập: ");
         let password = prompt("Xin vui lòng nhập mật khẩu: ");
+        let ktra = false;
         while(true){
-            let ktra = false;
+            ktra = false;
             const snapshot = await getDocs(acc);
             const messagesArray = [];
             const accountsArray = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
