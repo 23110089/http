@@ -25,20 +25,29 @@ onSnapshot(messagesRef, (snapshot) => {
     const messagesList = document.getElementById("messages");
     messagesList.innerHTML = ""; // Xóa danh sách tin nhắn hiện tại
     snapshot.forEach((doc) => {
-        const message = doc.data().text;
+        const { sender, receiver, text } = doc.data();
         const li = document.createElement("li");
-        li.textContent = message;
+        li.textContent = `${sender} gửi cho ${receiver}: ${text}`;
         messagesList.appendChild(li);
     });
 });
 
 // Gửi tin nhắn
 document.getElementById("send-button").addEventListener("click", async () => {
+    const senderInput = document.getElementById("sender-input");
+    const receiverInput = document.getElementById("receiver-input");
     const messageInput = document.getElementById("message-input");
+    
+    const senderName = senderInput.value.trim();
+    const receiverName = receiverInput.value.trim();
     const messageText = messageInput.value.trim();
 
-    if (messageText) {
-        await addDoc(messagesRef, { text: messageText });
+    if (senderName && receiverName && messageText) {
+        await addDoc(messagesRef, {
+            sender: senderName,
+            receiver: receiverName,
+            text: messageText
+        });
         messageInput.value = ""; // Xóa trường nhập
     }
 });
