@@ -8,7 +8,7 @@ const firebaseConfig = {
     projectId: "message-5b161",
     storageBucket: "message-5b161.appspot.com",
     messagingSenderId: "536015331602",
-    appId: "1:536015331602:web:de596fa165aebfb205d3cb",
+    appId: "1:536015331602:web:de596fa1e65aebfb205d3cb",
     measurementId: "G-XQ6TWC83J0"
 };
 const db = getFirestore(initializeApp(firebaseConfig));
@@ -79,7 +79,7 @@ document.getElementById("message-input").addEventListener("keypress", (event) =>
 
 // đăng xuất
 document.getElementById("logout-button").addEventListener("click", () => {
-    document.cookie = "expires=Thu, 01 Jan 1970 00:00:00 UTC";
+    deleteCookie('username');
     location.reload();
 });
 
