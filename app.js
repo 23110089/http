@@ -45,12 +45,10 @@ onSnapshot(messagesRef, (snapshot) => {
         // Kiểm tra nếu tin nhắn là của người gửi hiện tại
         if (sender === senderName) {
             li.classList.add("sender");
-            // li.textContent = `${sender}: ${text}`; // Hiển thị tên người gửi và nội dung tin nhắn
-            li.textContent = `${text}`;
+            li.textContent = `${text}`; // Chỉ hiển thị nội dung tin nhắn
         } else if (receiver === senderName) { // Kiểm tra nếu người nhận là người hiện tại
             li.classList.add("receiver");
-            // li.textContent = `${receiver}: ${text}`; // Hiển thị tên người nhận và nội dung tin nhắn
-            li.textContent = `${text}`;
+            li.textContent = `${text}`; // Chỉ hiển thị nội dung tin nhắn
         }
 
         messagesList.appendChild(li);
@@ -58,7 +56,7 @@ onSnapshot(messagesRef, (snapshot) => {
 });
 
 // Gửi tin nhắn
-document.getElementById("send-button").addEventListener("click", async () => {
+const sendMessage = async () => {
     const senderInput = document.getElementById("sender-input");
     const receiverInput = document.getElementById("receiver-input");
     const messageInput = document.getElementById("message-input");
@@ -75,5 +73,16 @@ document.getElementById("send-button").addEventListener("click", async () => {
             timestamp: new Date() // Thêm timestamp
         });
         messageInput.value = ""; // Xóa trường nhập
+    }
+};
+
+// Gửi khi nhấn nút
+document.getElementById("send-button").addEventListener("click", sendMessage);
+
+// Gửi khi nhấn phím Enter
+document.getElementById("message-input").addEventListener("keypress", (event) => {
+    if (event.key === "Enter") {
+        event.preventDefault(); // Ngăn chặn hành động mặc định
+        sendMessage(); // Gọi hàm gửi tin nhắn
     }
 });
