@@ -37,11 +37,9 @@ const loadMessages = async () => {
             const li = document.createElement("li");
             if (sender === senderName && receiver === receiverName) {
                 li.classList.add("sender");
-                li.textContent = `${senderName} ${receiverName} ${sender} ${receiver}`;
                 li.textContent = `${text}`;
             } else if (receiver === senderName && sender === receiverName) {
                 li.classList.add("receiver");
-                li.textContent = `${senderName} ${receiverName} ${sender} ${receiver}`;
                 li.textContent = `${text}`;
             }
 
