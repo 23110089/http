@@ -102,7 +102,7 @@ function checkLogin() {
         let password = prompt("Xin vui lòng nhập mật khẩu: ");
         while(true){
             let ktra = false;
-            const snapshot = await getDocs(accRef);
+            const snapshot = await getDocs(acc);
             const messagesArray = [];
             const accountsArray = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
             
