@@ -20,6 +20,8 @@ const db = getFirestore(app);
 // Tham chiếu đến bộ sưu tập tin nhắn
 const messagesRef = collection(db, "messages");
 
+const messagesList = document.getElementById("messages");
+
 // Hàm tải lại tin nhắn
 const loadMessages = (senderName) => {
     onSnapshot(messagesRef, (snapshot) => {
