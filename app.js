@@ -12,7 +12,7 @@ const firebaseConfig = {
     measurementId: "G-XQ6TWC83J0"
 };
 const db = getFirestore(initializeApp(firebaseConfig));
-const messagesRef = collection(db, "messages");
+const messagesRef = collection(db, "msg");
 
 // Hàm tải lại tin nhắn
 const loadMessages = async () => {
