@@ -27,7 +27,16 @@ onSnapshot(messagesRef, (snapshot) => {
     snapshot.forEach((doc) => {
         const { sender, receiver, text } = doc.data();
         const li = document.createElement("li");
-        li.textContent = `${sender} gửi cho ${receiver}: ${text}`;
+
+        // Kiểm tra nếu người gửi là người hiện tại
+        if (sender === "YourName") { // Thay "YourName" bằng tên của người gửi hiện tại
+            li.classList.add("sender");
+            li.textContent = `${sender} gửi: ${text}`;
+        } else {
+            li.classList.add("receiver");
+            li.textContent = `${receiver} nhận: ${text}`;
+        }
+
         messagesList.appendChild(li);
     });
 });
