@@ -3,18 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ứng dụng Nhắn tin Firebase</title>
+    <title>Ứng dụng Nhắn tin</title>
     <link rel="stylesheet" href="style.css">
     <script type="module" src="app.js" defer></script>
 </head>
 <body>
-    <h1>Ứng dụng Nhắn tin Firebase</h1>
+    <h1>Ứng dụng Nhắn tin</h1>
+    
     <div id="chat-box">
         <ul id="messages"></ul>
     </div>
-    <input id="sender-input" type="text" placeholder="Tên người gửi" />
-    <input id="receiver-input" type="text" placeholder="Tên người nhận" />
-    <input id="message-input" type="text" placeholder="Nhập tin nhắn..." />
+    
+    <input type="text" id="sender-input" placeholder="Tên người gửi" required>
+    <input type="text" id="receiver-input" placeholder="Tên người nhận" required>
+    <input type="text" id="message-input" placeholder="Nhập tin nhắn" required>
     <button id="send-button">Gửi</button>
 </body>
 </html>
