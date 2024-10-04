@@ -89,3 +89,34 @@ receiverInput.addEventListener("input", () => {
     const receiverName = receiverInput.value.trim();
     if (senderName && receiverName) loadMessages(senderName);
 });
+
+// Hàm kiểm tra cookie và yêu cầu người dùng nhập tên đăng nhập và mật khẩu
+function checkLogin() {
+    // Lấy cookie tên đăng nhập
+    const usernameCookie = getCookie("username");
+
+    if (!usernameCookie) {
+        // Nếu không có cookie tên đăng nhập, yêu cầu người dùng nhập
+        const username = prompt("Xin vui lòng nhập tên đăng nhập: "+document.cookie);
+        const password = prompt("Xin vui lòng nhập mật khẩu: ");
+
+        // Bạn có thể thêm logic để kiểm tra tên đăng nhập và mật khẩu tại đây
+        // Ví dụ: so sánh với thông tin đăng nhập đã lưu trữ
+
+        // Lưu cookie tên đăng nhập (không bao gồm mật khẩu)
+        document.cookie = `username=${username}; path=/; max-age=3600`; // Cookie sẽ hết hạn sau 1 giờ
+        alert("Đăng nhập thành công!");
+    } else {
+        alert(`Chào mừng trở lại, ${usernameCookie}!`);
+    }
+}
+
+// Hàm để lấy giá trị của cookie
+function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+}
+
+// Gọi hàm kiểm tra đăng nhập khi trang được tải
+window.onload = checkLogin;
