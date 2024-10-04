@@ -78,12 +78,12 @@ document.getElementById("message-input").addEventListener("keypress", (event) =>
 });
 
 // đăng xuất
-const sendMessage = async () => {
+const logout = async () => {
     document.cookie="";
     alert("Đã đăng xuất!");
     location.reload();
 }
-document.getElementById("logout-button").addEventListener("click", sendMessage);
+document.getElementById("logout-button").addEventListener("click", logout);
 
 // Lắng nghe sự thay đổi trong trường nhập người gửi và người nhận
 const senderInput = document.getElementById("sender-input");
