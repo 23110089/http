@@ -23,7 +23,7 @@ const messagesRef = collection(db, "messages");
 const messagesList = document.getElementById("messages");
 
 // Hàm tải lại tin nhắn
-const loadMessages = (senderName) => {
+const loadMessages = (senderName, receiverName) => {
     onSnapshot(messagesRef, (snapshot) => {
         const messagesList = document.getElementById("messages");
         messagesList.innerHTML = ""; // Xóa danh sách tin nhắn hiện tại
@@ -43,10 +43,10 @@ const loadMessages = (senderName) => {
             const li = document.createElement("li");
 
             // Kiểm tra nếu tin nhắn là của người gửi hiện tại
-            if (sender === senderName) {
+            if (sender === senderName && receiver === receiverName) {
                 li.classList.add("sender");
                 li.textContent = `${text}`; // Chỉ hiển thị nội dung tin nhắn
-            } else if (receiver === senderName) { // Kiểm tra nếu người nhận là người hiện tại
+            } else if (receiver === senderName && sender === receiverName) { // Kiểm tra nếu người nhận là người hiện tại
                 li.classList.add("receiver");
                 li.textContent = `${text}`; // Chỉ hiển thị nội dung tin nhắn
             }
