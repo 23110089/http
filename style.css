@@ -8,8 +8,8 @@ body {
 #chat-box {
     border: 1px solid #ccc;
     padding: 10px;
-    height: 300px;
-    overflow-y: scroll;
+    height: 300px; /* Giữ chiều cao cố định */
+    overflow-y: auto; /* Cuộn khi nội dung vượt quá chiều cao */
     background-color: #fff;
     display: flex;
     flex-direction: column; /* Đảm bảo các tin nhắn nằm theo chiều dọc */
@@ -34,6 +34,9 @@ textarea {
     padding: 0;
     display: flex;
     flex-direction: column;
+    margin: 0; /* Xóa margin để tránh tràn */
+    flex-grow: 1; /* Chiếm toàn bộ không gian còn lại trong khung chat */
+    overflow-y: auto; /* Cho phép cuộn nếu cần thiết */
 }
 
 #messages li {
