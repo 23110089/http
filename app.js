@@ -13,6 +13,7 @@ const firebaseConfig = {
 };
 const db = getFirestore(initializeApp(firebaseConfig));
 const messagesRef = collection(db, "msg");
+const acc = collection(db, "acc");
 
 // Hàm tải lại tin nhắn
 const loadMessages = async () => {
@@ -97,14 +98,37 @@ function checkLogin() {
 
     if (!usernameCookie) {
         // Nếu không có cookie tên đăng nhập, yêu cầu người dùng nhập
-        const username = prompt("Xin vui lòng nhập tên đăng nhập: "+document.cookie);
-        const password = prompt("Xin vui lòng nhập mật khẩu: ");
-
-        // Bạn có thể thêm logic để kiểm tra tên đăng nhập và mật khẩu tại đây
-        // Ví dụ: so sánh với thông tin đăng nhập đã lưu trữ
-
-        // Lưu cookie tên đăng nhập (không bao gồm mật khẩu)
-        document.cookie = `username=${username}; path=/`;
+        const username = prompt("Xin vui lòng nhập tên đăng nhập: ");
+        let password = prompt("Xin vui lòng nhập mật khẩu: ");
+        while(true){
+            let ktra = false;
+            onSnapshot(acc, (snapshot) => {
+                const messagesArray = [];
+                snapshot.forEach((doc) => {
+                    const data = doc.data();
+                    messagesArray.push({ id: doc.id, ...data }); // Lưu id cùng dữ liệu
+                });
+                messagesArray.forEach(({ tk, mk }) => {
+                    if(username == tk){
+                        if(password != mk){
+                            password = prompt("Xin vui lòng nhập mật khẩu: ");
+                            continue;
+                        }
+                        ktra = true;
+                    }
+                }
+            }
+            break;
+        }
+        if(ktra === false){
+            await addDoc(acc, {
+                tk: username,
+                mk: password
+            });
+        }
+        
+        // Lưu cookie thông tin đăng nhập
+        document.cookie = `username=${username}; pass=${password}; path=/`;
         alert("Đăng nhập thành công!");
     }
     document.getElementById("sender-input").value = getCookie("username");
