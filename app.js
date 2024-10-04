@@ -108,14 +108,15 @@ const checkLogin = async () => {
             
             accountsArray.forEach(({ tk, mk }) => {
                 if(username == tk){
+                    ktra = true;
                     if(password != mk){
                         password = prompt("Xin vui lòng nhập mật khẩu: ");
-                        continue;
+                    }else{
+                        break;
                     }
-                    ktra = true;
                 }
             }
-            break;
+            if(ktra === false) break;
         }
         if(ktra === false){
             await addDoc(acc, {
