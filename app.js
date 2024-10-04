@@ -53,6 +53,7 @@ const loadMessages = (senderName) => {
 
             messagesList.appendChild(li);
         });
+        messagesList.scrollTop = messagesList.scrollHeight;
     });
 };
 
@@ -98,7 +99,6 @@ senderInput.addEventListener("input", () => {
     const receiverName = receiverInput.value.trim();
     if (senderName && receiverName) {
         loadMessages(senderName);
-        messagesList.scrollTop = messagesList.scrollHeight;
     }
 });
 
@@ -107,6 +107,5 @@ receiverInput.addEventListener("input", () => {
     const receiverName = receiverInput.value.trim();
     if (senderName && receiverName) {
         loadMessages(senderName);
-        messagesList.scrollTop = messagesList.scrollHeight;
     }
 });
