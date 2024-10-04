@@ -18,7 +18,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 // Tham chiếu đến bộ sưu tập tin nhắn
-const messagesRef = collection(db, "msg");
+const messagesRef = collection(db, "messages");
 
 const messagesList = document.getElementById("messages");
 
