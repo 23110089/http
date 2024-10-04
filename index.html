@@ -3,35 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Firebase Web App</title>
-    <!-- Nhúng Firebase SDK -->
-    <script type="module">
-        // Import the functions you need from the SDKs you need
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-analytics.js";
-        import { getFirestore } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
-
-        // Cấu hình Firebase
-        const firebaseConfig = {
-            apiKey: "AIzaSyDqtvmIthBm6YJ_aYAMvfCt02Ca0w0acMY",
-            authDomain: "message-5b161.firebaseapp.com",
-            projectId: "message-5b161",
-            storageBucket: "message-5b161.appspot.com",
-            messagingSenderId: "536015331602",
-            appId: "1:536015331602:web:de596fa165aebfb205d3cb",
-            measurementId: "G-XQ6TWC83J0"
-        };
-
-        // Khởi tạo Firebase
-        const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
-        const db = getFirestore(app);
-
-        console.log('Firebase đã được khởi tạo');
-    </script>
+    <title>Ứng dụng Nhắn tin Firebase</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="module" src="app.js" defer></script>
 </head>
 <body>
-    <h1>Chào mừng đến với ứng dụng Firebase!</h1>
-    <p>Kiểm tra console để xem thông báo khởi tạo.</p>
+    <h1>Ứng dụng Nhắn tin Firebase</h1>
+    <div id="chat-box">
+        <ul id="messages"></ul>
+    </div>
+    <input id="message-input" type="text" placeholder="Nhập tin nhắn..." />
+    <button id="send-button">Gửi</button>
 </body>
 </html>
