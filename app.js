@@ -47,11 +47,11 @@ const loadMessages = async () => {
             // Kiểm tra nếu tin nhắn là của người gửi hiện tại
             if (sender === senderName) {
                 li.classList.add("sender");
-                li.textContent = `${receiverName} : ${text}`;
+                li.textContent = `${text}`;
             } else if (receiver === senderName) {
                 // Kiểm tra nếu người nhận là người hiện tại
                 li.classList.add("receiver");
-                li.textContent = `${receiverName} : ${text}`;
+                li.textContent = `${text}`;
             }
 
             messagesList.appendChild(li);
