@@ -16,7 +16,7 @@ body {
 }
 
 input[type="text"], textarea {
-    width: calc(33% - 10px); /* Đặt chiều rộng ô cho cân đối */
+    width: calc(23% - 10px); /* Đặt chiều rộng ô cho cân đối */
     padding: 10px;
     margin: 5px; /* Giảm khoảng cách giữa các ô */
     border: 1px solid #ccc;
