@@ -22,13 +22,25 @@ body {
     padding: 8px;
     margin: 5px 0;
     border-radius: 4px;
+    max-width: 70%; /* Giới hạn chiều rộng tin nhắn */
 }
 
-#message-input {
-    width: 80%;
-    padding: 10px;
+/* Tin nhắn của người gửi */
+.sender {
+    background-color: #d1e7dd; /* Màu nền cho tin nhắn của người gửi */
+    align-self: flex-end; /* Căn phải cho tin nhắn người gửi */
+    margin-left: auto; /* Đẩy tin nhắn sang bên phải */
 }
 
-button {
-    padding: 10px;
+/* Tin nhắn của người nhận */
+.receiver {
+    background-color: #f8d7da; /* Màu nền cho tin nhắn của người nhận */
+    align-self: flex-start; /* Căn trái cho tin nhắn người nhận */
+    margin-right: auto; /* Đẩy tin nhắn sang bên trái */
+}
+
+/* Thiết lập để sử dụng flexbox cho danh sách tin nhắn */
+#messages {
+    display: flex;
+    flex-direction: column;
 }
