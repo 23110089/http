@@ -8,7 +8,7 @@ body {
 #chat-box {
     border: 1px solid #ccc;
     padding: 10px;
-    height: 300px; /* Giữ chiều cao cố định */
+    height: 400px; /* Giữ chiều cao cố định */
     overflow-y: auto; /* Cuộn khi nội dung vượt quá chiều cao */
     background-color: #fff;
     display: flex;
@@ -24,8 +24,8 @@ input[type="text"], textarea {
 }
 
 textarea {
-    width: calc(66% - 10px); /* Kích thước cho ô nhập tin nhắn lớn hơn */
-    height: 60px; /* Chiều cao cho ô nhập tin nhắn */
+    width: calc(100% - 27px); /* Kích thước cho ô nhập tin nhắn lớn hơn */
+    height: 30px; /* Chiều cao cho ô nhập tin nhắn */
     resize: none; /* Không cho phép thay đổi kích thước */
 }
 
@@ -68,12 +68,15 @@ button {
     background-color: #4CAF50; /* Màu nền */
     color: white; /* Màu chữ */
     cursor: pointer; /* Con trỏ chuột khi hover */
-    transition: background-color 0.3s; /* Hiệu ứng chuyển màu khi hover */
     margin: 5px 0; /* Khoảng cách giữa nút và các trường khác */
     width: 100%; /* Chiếm toàn bộ chiều rộng */
 }
 
-/* Thay đổi màu nền khi hover */
-button:hover {
-    background-color: #45a049; /* Màu nền khi hover */
+#logout-button {
+    background-color: #f44336; /* Màu đỏ cho nút đăng xuất */
+    width: calc(23% - 10px); /* Đặt chiều rộng ô cho cân đối */
+    padding: 10px;
+    margin: 5px; /* Giảm khoảng cách giữa các ô */
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
