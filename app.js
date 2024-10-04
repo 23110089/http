@@ -44,8 +44,8 @@ const loadMessages = async () => {
             }
             messagesList.appendChild(li);
         });
+        messagesList.scrollTop = messagesList.scrollHeight;
     });
-    messagesList.scrollTop = messagesList.scrollHeight;
 };
 
 // Gửi tin nhắn
