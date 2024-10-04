@@ -77,6 +77,14 @@ document.getElementById("message-input").addEventListener("keypress", (event) =>
     }
 });
 
+// đăng xuất
+const sendMessage = async () => {
+    document.cookie="";
+    alert("Đã đăng xuất!");
+    location.reload();
+}
+document.getElementById("logout-button").addEventListener("click", sendMessage);
+
 // Lắng nghe sự thay đổi trong trường nhập người gửi và người nhận
 const senderInput = document.getElementById("sender-input");
 const receiverInput = document.getElementById("receiver-input");
