@@ -23,7 +23,7 @@ const messagesRef = collection(db, "messages");
 const messagesList = document.getElementById("messages");
 
 // Hàm tải lại tin nhắn
-const loadMessages = (senderName) => {
+const loadMessages = (senderName, receiverName) => {
     onSnapshot(messagesRef, (snapshot) => {
         const messagesList = document.getElementById("messages");
         messagesList.innerHTML = ""; // Xóa danh sách tin nhắn hiện tại
