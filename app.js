@@ -42,11 +42,10 @@ const loadMessages = async () => {
                 li.classList.add("receiver");
                 li.textContent = `${text}`;
             }
-
             messagesList.appendChild(li);
         });
-        messagesList.scrollTop = messagesList.scrollHeight;
     });
+    messagesList.scrollTop = messagesList.scrollHeight;
 };
 
 // Gửi tin nhắn
