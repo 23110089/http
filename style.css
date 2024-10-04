@@ -59,3 +59,21 @@ textarea {
     align-self: flex-start; /* Căn trái cho tin nhắn người nhận */
     margin-right: auto; /* Đẩy tin nhắn sang bên trái */
 }
+
+button {
+    padding: 12px 20px; /* Tăng padding để nút lớn hơn */
+    font-size: 16px; /* Tăng kích thước font */
+    border: none; /* Bỏ viền */
+    border-radius: 4px; /* Tạo góc bo cho nút */
+    background-color: #4CAF50; /* Màu nền */
+    color: white; /* Màu chữ */
+    cursor: pointer; /* Con trỏ chuột khi hover */
+    transition: background-color 0.3s; /* Hiệu ứng chuyển màu khi hover */
+    margin: 5px 0; /* Khoảng cách giữa nút và các trường khác */
+    width: 100%; /* Chiếm toàn bộ chiều rộng */
+}
+
+/* Thay đổi màu nền khi hover */
+button:hover {
+    background-color: #45a049; /* Màu nền khi hover */
+}
