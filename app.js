@@ -105,11 +105,11 @@ function checkLogin() {
 
         // Lưu cookie tên đăng nhập (không bao gồm mật khẩu)
         document.cookie = `username=${username}; path=/`; // Cookie sẽ hết hạn sau 1 giờ
-        document.getElementById("sender-input").value = username;
         alert("Đăng nhập thành công!");
     } else {
         alert(`Chào mừng trở lại, ${usernameCookie}!`);
     }
+    document.getElementById("sender-input").value = username;
 }
 
 // Hàm để lấy giá trị của cookie
