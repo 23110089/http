@@ -73,6 +73,7 @@ const sendMessage = async () => {
         });
         messageInput.value = ""; // Xóa trường nhập
     }
+    messagesList.scrollTop = messagesList.scrollHeight;
 };
 
 // Gửi khi nhấn nút
@@ -95,6 +96,7 @@ senderInput.addEventListener("input", () => {
     const receiverName = receiverInput.value.trim();
     if (senderName && receiverName) {
         loadMessages(senderName);
+        messagesList.scrollTop = messagesList.scrollHeight;
     }
 });
 
@@ -103,5 +105,6 @@ receiverInput.addEventListener("input", () => {
     const receiverName = receiverInput.value.trim();
     if (senderName && receiverName) {
         loadMessages(senderName);
+        messagesList.scrollTop = messagesList.scrollHeight;
     }
 });
