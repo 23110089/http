@@ -43,10 +43,10 @@ const loadMessages = (senderName) => {
             const li = document.createElement("li");
 
             // Kiểm tra nếu tin nhắn là của người gửi hiện tại
-            if (sender === senderName) {
+            if (sender === senderName && receiver === senderName) {
                 li.classList.add("sender");
                 li.textContent = `${text}`; // Chỉ hiển thị nội dung tin nhắn
-            } else if (receiver === senderName) { // Kiểm tra nếu người nhận là người hiện tại
+            } else if (receiver === senderName && sender === receiverName) { // Kiểm tra nếu người nhận là người hiện tại
                 li.classList.add("receiver");
                 li.textContent = `${text}`; // Chỉ hiển thị nội dung tin nhắn
             }
