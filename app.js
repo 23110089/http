@@ -35,14 +35,13 @@ const loadMessages = async () => {
         // Hiển thị tin nhắn
         messagesArray.forEach(({ sender, receiver, text }) => {
             const li = document.createElement("li");
-
-            // Kiểm tra nếu tin nhắn là của người gửi hiện tại
             if (sender === senderName && receiver === receiverName) {
                 li.classList.add("sender");
+                li.textContent = `${senderName} ${receiverName} ${sender} ${receiver}`;
                 li.textContent = `${text}`;
             } else if (receiver === senderName && sender === receiverName) {
-                // Kiểm tra nếu người nhận là người hiện tại
                 li.classList.add("receiver");
+                li.textContent = `${senderName} ${receiverName} ${sender} ${receiver}`;
                 li.textContent = `${text}`;
             }
 
