@@ -1,133 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Firebase Chat App</title>
-  <style>
-    #chat-container { width: 400px; margin: 0 auto; }
-    #messages { height: 300px; overflow-y: scroll; border: 1px solid #ccc; padding: 10px; }
-    .message { padding: 5px; border-bottom: 1px solid #ddd; }
-    .sent { color: blue; text-align: right; }
-    .received { color: green; text-align: left; }
-    input { width: 100%; padding: 10px; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firebase Web App</title>
+    <!-- Nhúng Firebase SDK -->
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-analytics.js";
+        import { getFirestore } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
+
+        // Cấu hình Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyDqtvmIthBm6YJ_aYAMvfCt02Ca0w0acMY",
+            authDomain: "message-5b161.firebaseapp.com",
+            projectId: "message-5b161",
+            storageBucket: "message-5b161.appspot.com",
+            messagingSenderId: "536015331602",
+            appId: "1:536015331602:web:de596fa165aebfb205d3cb",
+            measurementId: "G-XQ6TWC83J0"
+        };
+
+        // Khởi tạo Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const db = getFirestore(app);
+
+        console.log('Firebase đã được khởi tạo');
+    </script>
 </head>
 <body>
-
-<div id="chat-container">
-  <h2>Chat App</h2>
-
-  <!-- Đăng nhập -->
-  <div id="auth-container">
-    <input type="email" id="email" placeholder="Email" required>
-    <input type="password" id="password" placeholder="Password" required>
-    <button onclick="login()">Login</button>
-    <button onclick="signUp()">Sign Up</button>
-  </div>
-
-  <!-- Chat UI -->
-  <div id="chat-ui" style="display: none;">
-    <h3>Chat with <span id="chat-partner"></span></h3>
-    <div id="messages"></div>
-    <input type="text" id="message-input" placeholder="Type a message..." onkeypress="if(event.key === 'Enter') sendMessage()">
-  </div>
-</div>
-
-<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js"></script>
-
-<script>
-  // Cấu hình Firebase
-  const firebaseConfig = {
-    apiKey: "AIzaSyDqtvmIthBm6YJ_aYAMvfCt02Ca0w0acMY",
-    authDomain: "message-5b161.firebaseapp.com",
-    projectId: "message-5b161",
-    storageBucket: "message-5b161.appspot.com",
-    messagingSenderId: "536015331602",
-    appId: "1:536015331602:web:de596fa165aebfb205d3cb",
-    measurementId: "G-XQ6TWC83J0"
-  };
-  const app = firebase.initializeApp(firebaseConfig);
-  const db = firebase.firestore();
-  const auth = firebase.auth();
-
-  let currentUserId;
-  let chatPartnerId = "partnerUserId";  // Đặt ID của người bạn muốn chat cùng (có thể thay đổi linh hoạt)
-
-  // Đăng nhập
-  function login() {
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    auth.signInWithEmailAndPassword(email, password)
-      .then((userCredential) => {
-        currentUserId = userCredential.user.uid;
-        document.getElementById('auth-container').style.display = 'none';
-        document.getElementById('chat-ui').style.display = 'block';
-        loadMessages();
-        document.getElementById('chat-partner').innerText = chatPartnerId;
-      })
-      .catch((error) => {
-        console.error('Login failed:', error);
-      });
-  }
-
-  // Đăng ký
-  function signUp() {
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    auth.createUserWithEmailAndPassword(email, password)
-      .then((userCredential) => {
-        currentUserId = userCredential.user.uid;
-        console.log('User registered:', userCredential.user);
-      })
-      .catch((error) => {
-        console.error('Sign up failed:', error);
-      });
-  }
-
-  // Gửi tin nhắn
-  function sendMessage() {
-    const message = document.getElementById('message-input').value;
-    if (message.trim() === '') return;
-
-    db.collection('messages').add({
-      senderId: currentUserId,
-      receiverId: chatPartnerId,
-      message: message,
-      timestamp: firebase.firestore.FieldValue.serverTimestamp()
-    })
-    .then(() => {
-      document.getElementById('message-input').value = '';
-      console.log('Message sent successfully');
-    })
-    .catch((error) => {
-      console.error('Error sending message:', error);
-    });
-  }
-
-  // Hiển thị tin nhắn
-  function loadMessages() {
-    db.collection('messages')
-      .where('senderId', 'in', [currentUserId, chatPartnerId])
-      .where('receiverId', 'in', [currentUserId, chatPartnerId])
-      .orderBy('timestamp')
-      .onSnapshot((querySnapshot) => {
-        const messagesDiv = document.getElementById('messages');
-        messagesDiv.innerHTML = '';  // Xóa tin nhắn cũ
-        querySnapshot.forEach((doc) => {
-          const messageData = doc.data();
-          const messageDiv = document.createElement('div');
-          messageDiv.classList.add('message');
-          messageDiv.classList.add(messageData.senderId === currentUserId ? 'sent' : 'received');
-          messageDiv.innerText = messageData.message;
-          messagesDiv.appendChild(messageDiv);
-        });
-        messagesDiv.scrollTop = messagesDiv.scrollHeight;  // Tự động cuộn xuống cuối
-      });
-  }
-</script>
-
+    <h1>Chào mừng đến với ứng dụng Firebase!</h1>
+    <p>Kiểm tra console để xem thông báo khởi tạo.</p>
 </body>
 </html>
