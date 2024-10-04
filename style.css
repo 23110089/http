@@ -11,6 +11,22 @@ body {
     height: 300px;
     overflow-y: scroll;
     background-color: #fff;
+    display: flex;
+    flex-direction: column; /* Đảm bảo các tin nhắn nằm theo chiều dọc */
+}
+
+input[type="text"], textarea {
+    width: calc(33% - 10px); /* Đặt chiều rộng ô cho cân đối */
+    padding: 10px;
+    margin: 5px; /* Giảm khoảng cách giữa các ô */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+textarea {
+    width: calc(66% - 10px); /* Kích thước cho ô nhập tin nhắn lớn hơn */
+    height: 60px; /* Chiều cao cho ô nhập tin nhắn */
+    resize: none; /* Không cho phép thay đổi kích thước */
 }
 
 #messages {
