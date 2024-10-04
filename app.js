@@ -20,40 +20,39 @@ const db = getFirestore(app);
 // Tham chiếu đến bộ sưu tập tin nhắn
 const messagesRef = collection(db, "messages");
 
-// Lắng nghe tin nhắn mới
-onSnapshot(messagesRef, (snapshot) => {
-    const messagesList = document.getElementById("messages");
-    messagesList.innerHTML = ""; // Xóa danh sách tin nhắn hiện tại
+// Hàm tải lại tin nhắn
+const loadMessages = (senderName) => {
+    onSnapshot(messagesRef, (snapshot) => {
+        const messagesList = document.getElementById("messages");
+        messagesList.innerHTML = ""; // Xóa danh sách tin nhắn hiện tại
 
-    // Lấy tên người gửi từ trường input
-    const senderName = document.getElementById("sender-input").value.trim();
+        // Lưu tin nhắn vào mảng và sắp xếp theo timestamp
+        const messagesArray = [];
+        snapshot.forEach((doc) => {
+            const data = doc.data();
+            messagesArray.push({ id: doc.id, ...data }); // Lưu id cùng dữ liệu
+        });
 
-    // Lưu tin nhắn vào mảng và sắp xếp theo timestamp
-    const messagesArray = [];
-    snapshot.forEach((doc) => {
-        const data = doc.data();
-        messagesArray.push({ id: doc.id, ...data }); // Lưu id cùng dữ liệu
+        // Sắp xếp tin nhắn theo timestamp (từ cũ đến mới)
+        messagesArray.sort((a, b) => a.timestamp - b.timestamp);
+
+        // Hiển thị tin nhắn
+        messagesArray.forEach(({ sender, receiver, text }) => {
+            const li = document.createElement("li");
+
+            // Kiểm tra nếu tin nhắn là của người gửi hiện tại
+            if (sender === senderName) {
+                li.classList.add("sender");
+                li.textContent = `${text}`; // Chỉ hiển thị nội dung tin nhắn
+            } else if (receiver === senderName) { // Kiểm tra nếu người nhận là người hiện tại
+                li.classList.add("receiver");
+                li.textContent = `${text}`; // Chỉ hiển thị nội dung tin nhắn
+            }
+
+            messagesList.appendChild(li);
+        });
     });
-
-    // Sắp xếp tin nhắn theo timestamp (từ cũ đến mới)
-    messagesArray.sort((a, b) => a.timestamp - b.timestamp);
-
-    // Hiển thị tin nhắn
-    messagesArray.forEach(({ sender, receiver, text }) => {
-        const li = document.createElement("li");
-
-        // Kiểm tra nếu tin nhắn là của người gửi hiện tại
-        if (sender === senderName) {
-            li.classList.add("sender");
-            li.textContent = `${text}`; // Chỉ hiển thị nội dung tin nhắn
-        } else if (receiver === senderName) { // Kiểm tra nếu người nhận là người hiện tại
-            li.classList.add("receiver");
-            li.textContent = `${text}`; // Chỉ hiển thị nội dung tin nhắn
-        }
-
-        messagesList.appendChild(li);
-    });
-});
+};
 
 // Gửi tin nhắn
 const sendMessage = async () => {
@@ -84,5 +83,25 @@ document.getElementById("message-input").addEventListener("keypress", (event) =>
     if (event.key === "Enter") {
         event.preventDefault(); // Ngăn chặn hành động mặc định
         sendMessage(); // Gọi hàm gửi tin nhắn
+    }
+});
+
+// Lắng nghe sự thay đổi trong trường nhập người gửi và người nhận
+const senderInput = document.getElementById("sender-input");
+const receiverInput = document.getElementById("receiver-input");
+
+senderInput.addEventListener("input", () => {
+    const senderName = senderInput.value.trim();
+    const receiverName = receiverInput.value.trim();
+    if (senderName && receiverName) {
+        loadMessages(senderName);
+    }
+});
+
+receiverInput.addEventListener("input", () => {
+    const senderName = senderInput.value.trim();
+    const receiverName = receiverInput.value.trim();
+    if (senderName && receiverName) {
+        loadMessages(senderName);
     }
 });
