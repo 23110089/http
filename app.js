@@ -102,20 +102,17 @@ function checkLogin() {
         let password = prompt("Xin vui lòng nhập mật khẩu: ");
         while(true){
             let ktra = false;
-            onSnapshot(acc, (snapshot) => {
-                const messagesArray = [];
-                snapshot.forEach((doc) => {
-                    const data = doc.data();
-                    messagesArray.push({ id: doc.id, ...data }); // Lưu id cùng dữ liệu
-                });
-                messagesArray.forEach(({ tk, mk }) => {
-                    if(username == tk){
-                        if(password != mk){
-                            password = prompt("Xin vui lòng nhập mật khẩu: ");
-                            continue;
-                        }
-                        ktra = true;
+            const snapshot = await getDocs(accRef);
+            const messagesArray = [];
+            const accountsArray = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            
+            accountsArray.forEach(({ tk, mk }) => {
+                if(username == tk){
+                    if(password != mk){
+                        password = prompt("Xin vui lòng nhập mật khẩu: ");
+                        continue;
                     }
+                    ktra = true;
                 }
             }
             break;
