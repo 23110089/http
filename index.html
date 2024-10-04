@@ -1,38 +1,132 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Công cụ yêu cầu HTTP</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Firebase Chat App</title>
+  <style>
+    #chat-container { width: 400px; margin: 0 auto; }
+    #messages { height: 300px; overflow-y: scroll; border: 1px solid #ccc; padding: 10px; }
+    .message { padding: 5px; border-bottom: 1px solid #ddd; }
+    .sent { color: blue; text-align: right; }
+    .received { color: green; text-align: left; }
+    input { width: 100%; padding: 10px; }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Công cụ yêu cầu HTTP</h1>
-        <form id="httpRequestForm">
-            <label for="url">URL:</label>
-            <input type="text" id="url" required>
 
-            <label for="method">Phương thức:</label>
-            <select id="method">
-                <option value="GET">GET</option>
-                <option value="POST">POST</option>
-                <option value="PUT">PUT</option>
-                <option value="DELETE">DELETE</option>
-            </select>
+<div id="chat-container">
+  <h2>Chat App</h2>
 
-            <label for="headers">Headers:</label>
-            <textarea id="headers" placeholder='{"Content-Type": "application/json"}'></textarea>
+  <!-- Đăng nhập -->
+  <div id="auth-container">
+    <input type="email" id="email" placeholder="Email" required>
+    <input type="password" id="password" placeholder="Password" required>
+    <button onclick="login()">Login</button>
+    <button onclick="signUp()">Sign Up</button>
+  </div>
 
-            <label for="body">Body:</label>
-            <textarea id="body" placeholder='{"key": "value"}'></textarea>
+  <!-- Chat UI -->
+  <div id="chat-ui" style="display: none;">
+    <h3>Chat with <span id="chat-partner"></span></h3>
+    <div id="messages"></div>
+    <input type="text" id="message-input" placeholder="Type a message..." onkeypress="if(event.key === 'Enter') sendMessage()">
+  </div>
+</div>
 
-            <button type="submit">Gửi yêu cầu</button>
-        </form>
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js"></script>
 
-        <h2>Kết quả</h2>
-        <pre id="response"></pre>
-    </div>
-    <script src="script.js"></script>
+<script>
+  // Cấu hình Firebase
+  const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_PROJECT_ID.appspot.com",
+    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+    appId: "YOUR_APP_ID"
+  };
+  const app = firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+  const auth = firebase.auth();
+
+  let currentUserId;
+  let chatPartnerId = "partnerUserId";  // Đặt ID của người bạn muốn chat cùng (có thể thay đổi linh hoạt)
+
+  // Đăng nhập
+  function login() {
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    auth.signInWithEmailAndPassword(email, password)
+      .then((userCredential) => {
+        currentUserId = userCredential.user.uid;
+        document.getElementById('auth-container').style.display = 'none';
+        document.getElementById('chat-ui').style.display = 'block';
+        loadMessages();
+        document.getElementById('chat-partner').innerText = chatPartnerId;
+      })
+      .catch((error) => {
+        console.error('Login failed:', error);
+      });
+  }
+
+  // Đăng ký
+  function signUp() {
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    auth.createUserWithEmailAndPassword(email, password)
+      .then((userCredential) => {
+        currentUserId = userCredential.user.uid;
+        console.log('User registered:', userCredential.user);
+      })
+      .catch((error) => {
+        console.error('Sign up failed:', error);
+      });
+  }
+
+  // Gửi tin nhắn
+  function sendMessage() {
+    const message = document.getElementById('message-input').value;
+    if (message.trim() === '') return;
+
+    db.collection('messages').add({
+      senderId: currentUserId,
+      receiverId: chatPartnerId,
+      message: message,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp()
+    })
+    .then(() => {
+      document.getElementById('message-input').value = '';
+      console.log('Message sent successfully');
+    })
+    .catch((error) => {
+      console.error('Error sending message:', error);
+    });
+  }
+
+  // Hiển thị tin nhắn
+  function loadMessages() {
+    db.collection('messages')
+      .where('senderId', 'in', [currentUserId, chatPartnerId])
+      .where('receiverId', 'in', [currentUserId, chatPartnerId])
+      .orderBy('timestamp')
+      .onSnapshot((querySnapshot) => {
+        const messagesDiv = document.getElementById('messages');
+        messagesDiv.innerHTML = '';  // Xóa tin nhắn cũ
+        querySnapshot.forEach((doc) => {
+          const messageData = doc.data();
+          const messageDiv = document.createElement('div');
+          messageDiv.classList.add('message');
+          messageDiv.classList.add(messageData.senderId === currentUserId ? 'sent' : 'received');
+          messageDiv.innerText = messageData.message;
+          messagesDiv.appendChild(messageDiv);
+        });
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;  // Tự động cuộn xuống cuối
+      });
+  }
+</script>
+
 </body>
 </html>
