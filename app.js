@@ -81,7 +81,6 @@ document.getElementById("message-input").addEventListener("keypress", (event) =>
 document.getElementById("logout-button").addEventListener("click", () => {
     deleteCookie("username");
     deleteCookie("pass");
-    alert("Bạn đã đăng xuất!");
     location.reload();
 });
 
