@@ -1,8 +1,7 @@
-// Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
 import { getFirestore, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
 
-// Cấu hình Firebase
+// khởi tạo Firebase
 const firebaseConfig = {
     apiKey: "AIzaSyDqtvmIthBm6YJ_aYAMvfCt02Ca0w0acMY",
     authDomain: "message-5b161.firebaseapp.com",
@@ -12,15 +11,8 @@ const firebaseConfig = {
     appId: "1:536015331602:web:de596fa165aebfb205d3cb",
     measurementId: "G-XQ6TWC83J0"
 };
-
-// Khởi tạo Firebase
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-// Tham chiếu đến bộ sưu tập tin nhắn
+const db = getFirestore(initializeApp(firebaseConfig));
 const messagesRef = collection(db, "messages");
-
-const messagesList = document.getElementById("messages");
 
 // Hàm tải lại tin nhắn
 const loadMessages = async () => {
@@ -45,10 +37,10 @@ const loadMessages = async () => {
             const li = document.createElement("li");
 
             // Kiểm tra nếu tin nhắn là của người gửi hiện tại
-            if (sender === senderName) {
+            if (sender === senderName && receiver === receiverName) {
                 li.classList.add("sender");
                 li.textContent = `${text}`;
-            } else if (receiver === senderName) {
+            } else if (receiver === senderName && sender === receiverName) {
                 // Kiểm tra nếu người nhận là người hiện tại
                 li.classList.add("receiver");
                 li.textContent = `${text}`;
@@ -62,6 +54,7 @@ const loadMessages = async () => {
 
 // Gửi tin nhắn
 const sendMessage = async () => {
+    const messagesList = document.getElementById("messages");
     const senderName = document.getElementById("sender-input").value.trim();
     const receiverName = document.getElementById("receiver-input").value.trim();
     const messageText = document.getElementById("message-input").value.trim();
