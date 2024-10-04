@@ -113,7 +113,7 @@ const checkLogin = async () => {
                     }
                     ktra = true;
                 }
-            }
+            });
             if(ktra === false) break;
         }
         if(ktra === false){
