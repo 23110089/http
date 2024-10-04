@@ -14,7 +14,6 @@ const firebaseConfig = {
 const db = getFirestore(initializeApp(firebaseConfig));
 const messagesRef = collection(db, "msg");
 
-document.getElementById("sender-input").value = getCookie("username");
 // Hàm tải lại tin nhắn
 const loadMessages = async () => {
     onSnapshot(messagesRef, (snapshot) => {
@@ -121,3 +120,4 @@ function getCookie(name) {
 
 // Gọi hàm kiểm tra đăng nhập khi trang được tải
 window.onload = checkLogin;
+document.getElementById("sender-input").value = getCookie("username");
