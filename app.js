@@ -120,7 +120,8 @@ const checkLogin = async () => {
         if(ktra === false){
             await addDoc(acc, {
                 tk: username,
-                mk: password
+                mk: password,
+                tt: true
             });
         }
         // Lưu cookie thông tin đăng nhập
