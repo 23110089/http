@@ -106,9 +106,8 @@ function checkLogin() {
         // Lưu cookie tên đăng nhập (không bao gồm mật khẩu)
         document.cookie = `username=${username}; path=/`;
         alert("Đăng nhập thành công!");
-    } else {
-        document.cookie;
     }
+    document.getElementById("sender-input").value = getCookie("username");
 }
 
 // Hàm để lấy giá trị của cookie
@@ -120,6 +119,3 @@ function getCookie(name) {
 
 // Gọi hàm kiểm tra đăng nhập khi trang được tải
 window.onload = checkLogin;
-while(!document.cookie){
-    document.getElementById("sender-input").value = getCookie("username");
-}
