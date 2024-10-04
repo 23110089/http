@@ -13,6 +13,7 @@ const firebaseConfig = {
 };
 const db = getFirestore(initializeApp(firebaseConfig));
 const messagesRef = collection(db, "msg");
+const username;
 
 // Hàm tải lại tin nhắn
 const loadMessages = async () => {
@@ -104,12 +105,11 @@ function checkLogin() {
         // Ví dụ: so sánh với thông tin đăng nhập đã lưu trữ
 
         // Lưu cookie tên đăng nhập (không bao gồm mật khẩu)
-        document.cookie = `username=${username}; path=/`; // Cookie sẽ hết hạn sau 1 giờ
+        document.cookie = `username=${username}; path=/`;
         alert("Đăng nhập thành công!");
     } else {
         alert(`Chào mừng trở lại, ${usernameCookie}!`);
     }
-    document.getElementById("sender-input").value = username;
 }
 
 // Hàm để lấy giá trị của cookie
@@ -121,3 +121,4 @@ function getCookie(name) {
 
 // Gọi hàm kiểm tra đăng nhập khi trang được tải
 window.onload = checkLogin;
+document.getElementById("sender-input").value = username;
