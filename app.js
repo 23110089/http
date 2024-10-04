@@ -45,10 +45,10 @@ onSnapshot(messagesRef, (snapshot) => {
         // Kiểm tra nếu tin nhắn là của người gửi hiện tại
         if (sender === senderName) {
             li.classList.add("sender");
-            li.textContent = `${sender}: ${text}`;
+            li.textContent = `${sender}: ${text}`; // Hiển thị tên người gửi và nội dung tin nhắn
         } else if (receiver === senderName) { // Kiểm tra nếu người nhận là người hiện tại
             li.classList.add("receiver");
-            li.textContent = `${receiver}: ${text}`;
+            li.textContent = `${receiver}: ${text}`; // Hiển thị tên người nhận và nội dung tin nhắn
         }
 
         messagesList.appendChild(li);
