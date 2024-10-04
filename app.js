@@ -101,21 +101,15 @@ const checkLogin = async () => {
         const username = prompt("Xin vui lòng nhập tên đăng nhập: ");
         let password = prompt("Xin vui lòng nhập mật khẩu: ");
         let ktra = false;
-        while(true){
-            ktra = false;
-            const snapshot = await getDocs(acc);
-            const messagesArray = [];
-            const accountsArray = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            
-            accountsArray.forEach(({ tk, mk }) => {
-                if(username == tk){
-                    if(password !== mk && ktra === false){
-                        password = prompt("Xin vui lòng nhập mật khẩu: ");
-                    }
-                    ktra = true;
+        const snapshot = await getDocs(acc);
+        const accountsArray = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        for(const account of accountsArray) {
+            if(username == account.tk){
+                if(password !== mk && ktra === false){
+                    while(password !== mk) password = prompt("Xin vui lòng nhập mật khẩu: ");
                 }
-            });
-            if(ktra === false) break;
+                ktra = true;
+            }
         }
         if(ktra === false){
             await addDoc(acc, {
@@ -123,7 +117,6 @@ const checkLogin = async () => {
                 mk: password
             });
         }
-        
         // Lưu cookie thông tin đăng nhập
         document.cookie = `username=${username}; pass=${password}; path=/`;
         alert("Đăng nhập thành công!");
