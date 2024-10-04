@@ -92,7 +92,7 @@ receiverInput.addEventListener("input", () => {
 });
 
 // Hàm kiểm tra cookie và yêu cầu người dùng nhập tên đăng nhập và mật khẩu
-function checkLogin() {
+const checkLogin = async () => {
     // Lấy cookie tên đăng nhập
     const usernameCookie = getCookie("username");
 
