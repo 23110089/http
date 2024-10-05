@@ -125,7 +125,7 @@ const checkLogin = async () => {
             });
         }
         // Lưu cookie thông tin đăng nhập
-        document.cookie = `username=${username}; pass=${password}; path=/;`;
+        document.cookie = `username=${username}; password=${password};`;
         alert("Đăng nhập thành công!");
     }
     document.getElementById("sender-input").value = getCookie("username");
