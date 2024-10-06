@@ -79,7 +79,7 @@ document.getElementById("message-input").addEventListener("keypress", (event) =>
 
 // đăng xuất
 document.getElementById("logout-button").addEventListener("click", () => {
-    document.cookie = "";
+    document.cookie = "username=; password=;";
     location.reload();
 });
 
