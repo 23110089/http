@@ -79,7 +79,8 @@ document.getElementById("message-input").addEventListener("keypress", (event) =>
 
 // đăng xuất
 document.getElementById("logout-button").addEventListener("click", () => {
-    document.cookie = "username=; password=;";
+    document.cookie = "username=";
+    document.cookie = "password=";
     location.reload();
 });
 
@@ -125,8 +126,8 @@ const checkLogin = async () => {
             });
         }
         // Lưu cookie thông tin đăng nhập
-        document.cookie = `username=${username};`;
-        document.cookie = `password=${password};`;
+        document.cookie = `username=${username}`;
+        document.cookie = `password=${password}`;
         alert("Đăng nhập thành công!");
     }
     document.getElementById("sender-input").value = getCookie("username");
