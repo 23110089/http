@@ -130,7 +130,7 @@ const checkLogin = async () => {
         document.cookie = `password=${password}`;
         setTimeout(function() {
           console.log("Đăng nhập thành công!");
-        }, 1000);
+        }, 3000);
     }
     document.getElementById("sender-input").value = getCookie("username");
 }
