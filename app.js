@@ -1,4 +1,4 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
+eimport { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
 import { getFirestore, collection, addDoc, onSnapshot,  getDocs } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
 
 // khởi tạo Firebase
@@ -128,7 +128,9 @@ const checkLogin = async () => {
         // Lưu cookie thông tin đăng nhập
         document.cookie = `username=${username}`;
         document.cookie = `password=${password}`;
-        alert("Đăng nhập thành công!");
+        setTimeout(function() {
+          console.log("Đăng nhập thành công!");
+        }, 1000);
     }
     document.getElementById("sender-input").value = getCookie("username");
 }
