@@ -128,9 +128,6 @@ const checkLogin = async () => {
         // Lưu cookie thông tin đăng nhập
         document.cookie = `username=${username}`;
         document.cookie = `password=${password}`;
-        setTimeout(function() {
-          console.log("Đăng nhập thành công!");
-        }, 3000);
     }
     document.getElementById("sender-input").value = getCookie("username");
 }
